@@ -10,13 +10,15 @@ const seed = Mnemonic.mnemonicToSeed('念 疾 暴 或 熊 行 黑 垄 长 亮 �
 {
   const btc_prv = btc.HDNode.fromSeedBuffer(seed).derivePath("m/49'/0'/0'/0");
   const btc_pub = btc_prv.neutered();
-  const btc_prv0 = btc_prv.derive(0);
-  const btc_pub0 = btc_pub.derive(0);
-  const btc_add0 = btc.address.fromOutputScript(btc.script.scriptHash.output.encode(btc.crypto.hash160(btc.script.witnessPubKeyHash.output.encode(btc.crypto.hash160(btc_pub0.getPublicKeyBuffer())))));
   console.log("BITCOIN BIP49");
-  console.log("private key 0: "+btc_prv0.keyPair.toWIF());
-  console.log("public key  0: "+btc_pub0.getPublicKeyBuffer().toString('hex'));
-  console.log("address     0: "+btc_add0);
+  for (let i = 0; i < 8; i++) {
+    const btc_prv0 = btc_prv.derive(i);
+    const btc_pub0 = btc_pub.derive(i);
+    const btc_add0 = btc.address.fromOutputScript(btc.script.scriptHash.output.encode(btc.crypto.hash160(btc.script.witnessPubKeyHash.output.encode(btc.crypto.hash160(btc_pub0.getPublicKeyBuffer())))));
+    console.log("private key "+i+": "+btc_prv0.keyPair.toWIF());
+    console.log(" public key "+i+": "+btc_pub0.getPublicKeyBuffer().toString('hex'));
+    console.log("    address "+i+": "+btc_add0);
+  }
   console.log();
 }
 
@@ -24,13 +26,15 @@ const seed = Mnemonic.mnemonicToSeed('念 疾 暴 或 熊 行 黑 垄 长 亮 �
 {
   const btc_prv = btc.HDNode.fromSeedBuffer(seed).derivePath("m/84'/0'/0'/0");
   const btc_pub = btc_prv.neutered();
-  const btc_prv0 = btc_prv.derive(0);
-  const btc_pub0 = btc_pub.derive(0);
-  const btc_add0 = btc.address.fromOutputScript(btc.script.witnessPubKeyHash.output.encode(btc.crypto.hash160(btc_pub0.getPublicKeyBuffer())))
   console.log("BITCOIN BIP84");
-  console.log("private key 0: "+btc_prv0.keyPair.toWIF());
-  console.log("public key  0: "+btc_pub0.getPublicKeyBuffer().toString('hex'));
-  console.log("address     0: "+btc_add0);
+  for (let i = 0; i < 8; i++) {
+    const btc_prv0 = btc_prv.derive(i);
+    const btc_pub0 = btc_pub.derive(i);
+    const btc_add0 = btc.address.fromOutputScript(btc.script.witnessPubKeyHash.output.encode(btc.crypto.hash160(btc_pub0.getPublicKeyBuffer())))
+    console.log("private key "+i+": "+btc_prv0.keyPair.toWIF());
+    console.log(" public key "+i+": "+btc_pub0.getPublicKeyBuffer().toString('hex'));
+    console.log("    address "+i+": "+btc_add0);
+  }
   console.log();
 }
 
@@ -38,13 +42,15 @@ const seed = Mnemonic.mnemonicToSeed('念 疾 暴 或 熊 行 黑 垄 长 亮 �
 {
   const eth_prv = eth_hdkey.fromMasterSeed(seed).derivePath("m/44'/60'/0'/0");
   const eth_pub = eth_hdkey.fromExtendedKey(eth_prv.publicExtendedKey());
-  const eth_prv0 = eth_prv.deriveChild(0)._hdkey;
-  const eth_pub0 = eth_pub.deriveChild(0)._hdkey;
-  const eth_add0 = eth_util.pubToAddress(eth_pub0._publicKey, true);
   console.log("ETHEREUM BIP44");
-  console.log("private key 0: "+eth_prv0._privateKey.toString('hex'));
-  console.log("public key  0: "+eth_pub0._publicKey.toString('hex'));
-  console.log("address     0: "+eth_add0.toString('hex'));
+  for (let i = 0; i < 8; i++) {
+    const eth_prv0 = eth_prv.deriveChild(i)._hdkey;
+    const eth_pub0 = eth_pub.deriveChild(i)._hdkey;
+    const eth_add0 = eth_util.pubToAddress(eth_pub0._publicKey, true);
+    console.log("private key "+i+": 0x"+eth_prv0._privateKey.toString('hex'));
+    console.log(" public key "+i+": 0x"+eth_pub0._publicKey.toString('hex'));
+    console.log("    address "+i+": 0x"+eth_add0.toString('hex'));
+  }
   console.log();
 }
 
