@@ -49,7 +49,7 @@ const seed = Mnemonic.mnemonicToSeed('念 疾 暴 或 熊 行 黑 垄 长 亮 �
     const eth_add0 = eth_util.pubToAddress(eth_pub0._publicKey, true);
     console.log("private key "+i+": 0x"+eth_prv0._privateKey.toString('hex'));
     console.log(" public key "+i+": 0x"+eth_pub0._publicKey.toString('hex'));
-    console.log("    address "+i+": 0x"+eth_add0.toString('hex'));
+    console.log("    address "+i+": 0x"+eth_util.toChecksumAddress(eth_add0.toString('hex')));
   }
   console.log();
 }
