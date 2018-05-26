@@ -2,7 +2,7 @@ const Mnemonic = require('bip39');
 const btc = require('bitcoinjs-lib');
 const eth_hdkey = require('ethereumjs-wallet/hdkey');
 const eth_util = require('ethereumjs-util');
-const btc_rpc = require('bitcoind-rpc');
+const BtcClient = require('bitcoin-core');
 
 const seed = Mnemonic.mnemonicToSeed('念 疾 暴 或 熊 行 黑 垄 长 亮 绕 植 漂 伤 投');
 
@@ -30,7 +30,7 @@ const seed = Mnemonic.mnemonicToSeed('念 疾 暴 或 熊 行 黑 垄 长 亮 �
   for (let i = 0; i < 8; i++) {
     const btc_prv0 = btc_prv.derive(i);
     const btc_pub0 = btc_pub.derive(i);
-    const btc_add0 = btc.address.fromOutputScript(btc.script.witnessPubKeyHash.output.encode(btc.crypto.hash160(btc_pub0.getPublicKeyBuffer())))
+    const btc_add0 = btc.address.fromOutputScript(btc.script.witnessPubKeyHash.output.encode(btc.crypto.hash160(btc_pub0.getPublicKeyBuffer())));
     console.log("private key "+i+": "+btc_prv0.keyPair.toWIF());
     console.log(" public key "+i+": "+btc_pub0.getPublicKeyBuffer().toString('hex'));
     console.log("    address "+i+": "+btc_add0);
@@ -54,7 +54,7 @@ const seed = Mnemonic.mnemonicToSeed('念 疾 暴 或 熊 行 黑 垄 长 亮 �
   console.log();
 }
 
-const rpc = new btc_rpc({
+const btcClient = new BtcClient({
   protocol: 'http',
   user: 'Ulysseys',
   pass: '8WcG3aNq5ApB37dH93KFDzts4jp9h5Cp',

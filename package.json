@@ -10,7 +10,7 @@
   "license": "ISC",
   "dependencies": {
     "bip39": "^2.5.0",
-    "bitcoind-rpc": "^0.7.1",
+    "bitcoin-core": "^2.0.0",
     "bitcoinjs-lib": "^3.3.2",
     "ethereumjs-util": "^5.2.0",
     "ethereumjs-wallet": "^0.6.0"
