@@ -2,17 +2,25 @@
   "name": "coinfair-wallets",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "src/index.js",
   "scripts": {
+    "test": "npm run standard && npm run coverage",
+    "standard": "standard",
+    "coverage": "nyc mocha",
     "start": "node index.js"
   },
-  "author": "",
-  "license": "ISC",
+  "author": "Daniel Zhou",
+  "license": "MIT",
   "dependencies": {
     "bip39": "^2.5.0",
     "bitcoin-core": "^2.0.0",
     "bitcoinjs-lib": "^3.3.2",
     "ethereumjs-util": "^5.2.0",
     "ethereumjs-wallet": "^0.6.0"
+  },
+  "devDependencies": {
+    "mocha": "^5.2.0",
+    "nyc": "^11.8.0",
+    "standard": "^11.0.1"
   }
 }

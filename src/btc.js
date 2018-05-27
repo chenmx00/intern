@@ -1,42 +1,39 @@
-const assert = require('assert');
-const Mnemonic = require('bip39');
-const btc = require('bitcoinjs-lib');
+const assert = require('assert')
+const btc = require('bitcoinjs-lib')
 
-const getBtcXPrv = (seed, derivationScheme = 'BIP49') => {
-  assert(seed.constructor.name === 'Buffer');
-  let xprv;
-  if (derivationScheme === 'BIP49')
-    xprv = btc.HDNode.fromSeedBuffer(seed).derivePath("m/49'/0'/0'/0");
-  else if (derivationScheme === 'BIP84')
-    xprv = btc.HDNode.fromSeedBuffer(seed).derivePath("m/84'/0'/0'/0");
-  else
-    assert(false);
-  return xprv.toBase58();
-};
+const getBtcXPrvBip49 = (seed) => {
+  assert(seed.constructor.name === 'Buffer')
+  return btc.HDNode.fromSeedBuffer(seed).derivePath("m/49'/0'/0'/0").toBase58()
+}
+
+const getBtcXPrvBip84 = (seed, derivationScheme = 'BIP49') => {
+  assert(seed.constructor.name === 'Buffer')
+  return btc.HDNode.fromSeedBuffer(seed).derivePath("m/84'/0'/0'/0").toBase58()
+}
 
 const getBtcXPub = (xprv) => {
-  assert(typeof(xprv) === 'string' && xprv.startsWith('xprv'));
-  return btc.HDNode.fromBase58(xprv).neutered().toBase58();
-};
+  assert(typeof xprv === 'string' && xprv.startsWith('xprv'))
+  return btc.HDNode.fromBase58(xprv).neutered().toBase58()
+}
 
 const getBtcPrv = (xprv, index) => {
-  assert(typeof(xprv) === 'string' && xprv.startsWith('xprv'));
-  assert(typeof(index) == 'number' && index >= 0);
-  return btc.HDNode.fromBase58(xprv).derive(index).keyPair.toWIF();
-};
+  assert(typeof xprv === 'string' && xprv.startsWith('xprv'))
+  assert(typeof index === 'number' && index >= 0)
+  return btc.HDNode.fromBase58(xprv).derive(index).keyPair.toWIF()
+}
 
-const getBtcAdd = (xpub, index, derivationScheme = 'BIP49') => {
-  assert(typeof(xpub) === 'string' && xpub.startsWith('xpub'));
-  assert(typeof(index) == 'number' && index >= 0);
-  const pub = btc.HDNode.fromBase58(xpub).derive(index);
-  let address;
-  if (derivationScheme === 'BIP49')
-    address = btc.address.fromOutputScript(btc.script.scriptHash.output.encode(btc.crypto.hash160(btc.script.witnessPubKeyHash.output.encode(btc.crypto.hash160(pub.getPublicKeyBuffer())))));
-  else if (derivationScheme === 'BIP84')
-    address = btc.address.fromOutputScript(btc.script.witnessPubKeyHash.output.encode(btc.crypto.hash160(pub.getPublicKeyBuffer())));
-  else
-    assert(false);
-  return address;
-};
+const getBtcAddBip49 = (xpub, index) => {
+  assert(typeof xpub === 'string' && xpub.startsWith('xpub'))
+  assert(typeof index === 'number' && index >= 0)
+  const pub = btc.HDNode.fromBase58(xpub).derive(index)
+  return btc.address.fromOutputScript(btc.script.scriptHash.output.encode(btc.crypto.hash160(btc.script.witnessPubKeyHash.output.encode(btc.crypto.hash160(pub.getPublicKeyBuffer())))))
+}
 
-module.exports = { getBtcXPrv, getBtcXPub, getBtcPrv, getBtcAdd };
+const getBtcAddBip84 = (xpub, index) => {
+  assert(typeof xpub === 'string' && xpub.startsWith('xpub'))
+  assert(typeof index === 'number' && index >= 0)
+  const pub = btc.HDNode.fromBase58(xpub).derive(index)
+  return btc.address.fromOutputScript(btc.script.witnessPubKeyHash.output.encode(btc.crypto.hash160(pub.getPublicKeyBuffer())))
+}
+
+module.exports = { getBtcXPrvBip49, getBtcXPrvBip84, getBtcXPub, getBtcPrv, getBtcAddBip49, getBtcAddBip84 }
