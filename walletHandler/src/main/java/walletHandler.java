@@ -6,3 +6,6 @@ public class walletHandler {
     Wallet wallet = new Wallet(new NetworkParameters());
     Address a = wallet.cur
 }
+
+public class
+

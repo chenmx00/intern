@@ -1,0 +1,24 @@
+{
+  "name": "btc-deposit-agent",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "standard": "standard",
+    "coverage": "nyc mocha",
+    "start": "node index.js"
+  },
+  "author": "",
+  "license": "UNLICENSED",
+  "private": true,
+  "dependencies": {
+    "bitcoin-core": "^2.0.0",
+    "pg": "^7.4.3"
+  },
+  "devDependencies": {
+    "mocha": "^5.2.0",
+    "nyc": "^11.8.0",
+    "standard": "^11.0.1"
+  }
+}
